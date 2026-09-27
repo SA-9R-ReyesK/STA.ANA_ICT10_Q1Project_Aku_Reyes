@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOGUISH | Receipt Generator</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #111;
+        }
+
+        nav {
+            background: #111;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        nav .brand {
+            color: #ffd400;
+            font-size: 20px;
+        }
+
+        .hero {
+            background: #ffd400;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 35px;
+        }
+
+        .hero p {
+            margin-bottom: 0;
+        }
+
+        .box {
+            max-width: 800px;
+            margin: 25px auto;
+            padding: 25px;
+            background: white;
+        }
+
+        h2 {
+            font-size: 21px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            margin: 7px 0 15px;
+            border: 1px solid #ccc;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        details {
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 6px;
+        }
+
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .shoe {
+            margin-top: 12px;
+        }
+
+        .shoe input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        button {
+            background: #111;
+            color: #ffd400;
+            border: 0;
+            padding: 13px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .full {
+            width: 100%;
+        }
+
+        #show, #sku_output {
+            background: #111;
+            color: white;
+            padding: 18px;
+            margin-top: 18px;
+        }
+
+        #show strong, #sku_output small {
+            color: #ffd400;
+        }
+
+        #sku_output strong {
+            display: block;
+            font-size: 28px;
+            margin: 8px 0;
+        }
+
+        .back {
+            background: #111;
+            color: #ffd400;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+     <!-- Navigation: Links the home page and the SKU generator section -->
+    <nav>
+        <a class="brand" href="index.html">VOGUISH</a>
+        <a href="index.html">Home</a>
+        <a href="#sku">SKU Generator</a>
+    </nav>
+
+      <!-- Hero: Displays the brand name and tagline -->
+    <div class="hero">
+        <h1>VOGUISH</h1>
+        <p>FIND YOUR PERFECT PAIR.</p>
+    </div>
+
+    <main class="box">
+
+        <h2>CUSTOMER INFORMATION</h2>
+
+        <div class="row">
+            <div>
+                <label>Name (ENTER FULL NAME)</label>
+                <input id="name" placeholder="Enter name">
+            </div>
+
+            <div>
+                <label>Contact Information</label>
+                <input id="contact" placeholder="Enter contact">
+            </div>
+        </div>
+
+        <!-- Shoe Selection: Allows the customer to select shoes from different categories -->
+        <h2>SELECT SHOES</h2>
+
+        <details>
+            <summary>Basketball</summary>
+            <div class="shoe">
+                <input type="checkbox" id="basketball">
+                <label for="basketball">
+                    Gianis Death 4 — ₱3,999
+                </label>
+            </div>
+        </details>
+
+        <details>
+            <summary>Soccer</summary>
+            <div class="shoe">
+                <input type="checkbox" id="soccer">
+                <label for="soccer">
+                    PREDATOR — ₱3,299
+                </label>
+            </div>
+        </details>
+
+        <details>
+            <summary>Volleyball</summary>
+            <div class="shoe">
+                <input type="checkbox" id="volleyball">
+                <label for="volleyball">
+                    Take Flight — ₱2,999
+                </label>
+            </div>
+        </details>
+
+        <details>
+            <summary>Sprinting</summary>
+            <div class="shoe">
+                <input type="checkbox" id="sprinting">
+                <label for="sprinting">
+                    MACH 1 — ₱2,899
+                </label>
+            </div>
+        </details>
+
+        <details>
+            <summary>Lifestyle</summary>
+            <div class="shoe">
+                <input type="checkbox" id="lifestyle">
+                <label for="lifestyle">
+                    Metcon 09 — ₱3,499
+                </label>
+            </div>
+        </details>
+
+        <details>
+            <summary>Slides</summary>
+            <div class="shoe">
+                <input type="checkbox" id="slides">
+                <label for="slides">
+                    Adilett 02 — ₱1,499
+                </label>
+            </div>
+        </details>
+
+        <button class="full" onclick="receipt()">CREATE RECEIPT</button>
+
+        <div id="show">Your order summary will appear here.</div>
+
+        <hr>
+
+        <!-- SKU Generator: Gives the users to generate an SKU based on the product details they select -->
+        <section id="sku">
+            <h2>SKU GENERATOR</h2>
+
+            <label>Category</label>
+            <select id="category" onchange="products()">
+                <option>Basketball</option>
+                <option>Soccer</option>
+                <option>Volleyball</option>
+                <option>Sprinting</option>
+                <option>Lifestyle</option>
+                <option>Slides</option>
+            </select>
+
+            <label>Product</label>
+            <select id="product"></select>
+
+            <label>Size</label>
+            <select id="size">
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
+
+            <label>Color</label>
+            <select id="color">
+                <option>Black</option>
+                <option>Red</option>
+                <option>White</option>
+                <option>Yellow</option>
+                <option>Green</option>
+            </select>
+
+            <label>Stock Quantity</label>
+            <input id="quantity" type="number" min="1" max="99" placeholder="1-99">
+
+            <button class="full" onclick="sku()">GENERATE SKU</button>
+
+            <div id="sku_output">
+                Your generated SKU will appear here.
+            </div>
+        </section>
+
+        <br>
+
+        <a class="back" href="index.html">← BACK TO HOME</a>
+
+    </main>
+
+    <footer>
+        VOGUISH © 2026 — Aku, Bhavik - Reyes, Kenji
+    </footer>
+
+    <script>
+        // Product Data: Contains the product names and prices for each category
+        const data = {
+            Basketball: ["Gianis Death 4", 3999],
+            Soccer: ["PREDATOR", 3299],
+            Volleyball: ["Take Flight", 2999],
+            Sprinting: ["MACH 1", 2899],
+            Lifestyle: ["Metcon 09", 3499],
+            Slides: ["Adilett 02", 1499]
+        };
+
+        // Creates the receipt based on the selected shoes and customer information
+        function receipt() {
+            let name = document.getElementById("name").value;
+            let contact = document.getElementById("contact").value;
+            let show = document.getElementById("show");
+
+            if (!name || !contact) {
+                show.innerHTML =
+                    "<strong>NOTICE</strong><br>" +
+                    "Please complete the customer information.";
+                return;
+            }
+
+            let items = [
+                ["basketball", "Gianis Death 4", 3999],
+                ["soccer", "PREDATOR", 3299],
+                ["volleyball", "Take Flight", 2999],
+                ["sprinting", "MACH 1", 2899],
+                ["lifestyle", "Metcon 09", 3499],
+                ["slides", "Adilett 02", 1499]
+            ];
+
+            let order = [];
+            let total = 0;
+
+            items.forEach(item => {
+                if (document.getElementById(item[0]).checked) {
+                    order.push(
+                        item[1] + " — ₱" + item[2].toLocaleString()
+                    );
+                    total += item[2];
+                }
+            });
+
+            if (!order.length) {
+                show.innerHTML =
+                    "<strong>NOTICE</strong><br>" +
+                    "Please select at least one shoe.";
+                return;
+            }
+
+            show.innerHTML =
+                "<strong>ORDER SUMMARY</strong><br><br>" +
+                "Customer: " + name + "<br>" +
+                "Contact: " + contact + "<br><br>" +
+                "<strong>SHOES</strong><br>" +
+                order.join("<br>") +
+                "<br><br><strong>Total: ₱" +
+                total.toLocaleString() + "</strong>";
+        }
+
+        // Updates the product based on the selected category
+        function products() {
+            let category = document.getElementById("category").value;
+            let product = document.getElementById("product");
+
+            product.innerHTML =
+                "<option>" + data[category][0] + "</option>";
+        }
+
+        // Generates the SKU based on the selected product details
+        function sku() {
+            let category = document.getElementById("category").value;
+            let product = document.getElementById("product").value;
+            let size = document.getElementById("size").value;
+            let color = document.getElementById("color").value;
+            let quantity = document.getElementById("quantity").value;
+            let sku_output = document.getElementById("sku_output");
+
+            if (!quantity || quantity < 1 || quantity > 99) {
+                sku_output.innerHTML =
+                    "<small>ERROR</small><br>" +
+                    "Stock quantity must be between 1 and 99.";
+                return;
+            }
+
+            let cat = {
+                Basketball: "BB",
+                Soccer: "SO",
+                Volleyball: "VL",
+                Sprinting: "SP",
+                Lifestyle: "LS",
+                Slides: "SL"
+            };
+
+            let prod = {
+                "Gianis Death 4": "GD",
+                "PREDATOR": "PR",
+                "Take Flight": "TF",
+                "MACH 1": "MA",
+                "Metcon 09": "ME",
+                "Adilett 02": "AD"
+            };
+
+            let sizes = {
+                7: "A",
+                8: "B",
+                9: "C",
+                10: "D",
+                11: "E",
+                12: "F"
+            };
+
+            let colors = {
+                Black: "B",
+                Red: "R",
+                White: "W",
+                Yellow: "Y",
+                Green: "G"
+            };
+
+            let code =
+                cat[category] +
+                prod[product] +
+                sizes[size] +
+                colors[color] +
+                String(quantity).padStart(2, "0");
+
+            sku_output.innerHTML =
+                "<small>GENERATED SKU</small>" +
+                "<strong>" + code + "</strong>" +
+                "<span>" + category + " • " + product +
+                "</span><br><span>Size " + size +
+                " • " + color + " • " + quantity +
+                " in stock</span>";
+        }
+
+        products();
+    </script>
+
+</body>
+</html>
+```
